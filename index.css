@@ -1,0 +1,224 @@
+:root {
+    --primary-color: #4CAF50;
+    --danger-color: #F44336;
+    --secondary-color: #ffffff;
+    --tertiary-color: #000000;
+}
+
+body {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: left;
+    background: fixed url(/img/marita-kavelashvili-ugnrXk1129g-unsplash.jpg) top left 50%/cover no-repeat;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+}
+
+.app-header {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 78px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.app-subtitle {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 21px;
+    text-align: center;
+    margin: 0;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.btn-add {
+    margin: 3em 0 1em 0;
+    width: 281px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    border-radius: 18px;
+    border: 1px solid var(--primary-color);
+    background-color: transparent;
+    gap: 10px;
+    cursor: pointer;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+
+    font-size: 25px;
+    font-weight: 700;
+    transition: color ease-in-out 250ms,
+                text-shadow ease-in-out 250ms,
+                background-color ease-in-out 250ms;
+}
+
+.btn-add:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.task-creation-component {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+
+    width: 520px;
+    height: auto;
+    padding: 1em;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid transparent;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.task-creation-component.active {
+    display: flex;
+}
+
+.task-creation-component.already-active {
+    border: 1px solid var(--danger-color);
+}
+
+.task-creation-component .row-icon {
+    font-size: 28px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.task-creation-component .row-actions {
+    justify-content: flex-end;
+}
+
+.app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+    width: 520px;
+    padding-bottom: 1.5em;
+    margin-bottom: 1.5em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.app-content .task {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    gap: 1em;
+    width: 100%;
+    padding: 1em;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.app-content .task.task-done {
+    background: #f0f0f0;
+    opacity: 0.7;
+}
+
+.task .task-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1em;
+    margin: 0 0 0.5em 0;
+}
+
+.task .task-title[contenteditable]:hover::after,
+.task .task-title[contenteditable]:focus::after {
+    display: inline-block;
+    position: relative;
+    right: -.125em;
+    top: 0;
+    content: "";
+    color: #000000;
+    vertical-align: middle;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor' class='bi bi-pencil'><path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 0.8em 0.8em;
+    width: 1em;
+    height: 1em;
+}
+
+.task .task-content {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    word-break: break-all;
+}
+
+.task .task-content .task-infos {
+    font-family: Montserrat;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0;
+}
+
+.task .task-actions {
+    display: flex;
+    flex-grow: auto;
+}
+.task .task-actions button.btn-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+.task .task-actions .btn-check:hover,
+.task .task-actions .btn-check:focus {
+    color: var(--primary-color);
+}
+
+.task .task-actions .btn-delete:hover,
+.task .task-actions .btn-delete:focus {
+    color: var(--danger-color);
+}
+
+.section-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 29px;
+    margin: 0;
+    color: var(--secondary-color);
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+}

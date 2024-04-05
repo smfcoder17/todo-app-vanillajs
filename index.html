@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Web Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+  <div class="app-container" id="app">
+    <div class="app-header">
+      <h1 class="app-title">TODO</h1>
+      <h6 class="app-subtitle">By SmfCoder</h6>
+
+      <button class="btn-add" id="btnNouveauTodo">
+        <i class="bi bi-plus-circle-fill"></i>
+        Nouvelle Tache
+      </button>
+
+      <form class="task-creation-component" id="todoForm">
+        <div class="row">
+          <div class="row-icon"><img src="img/Object.png" alt="task icon"></div>
+          <input type="text" name="todoTitre" placeholder="Nom de la Tache">
+        </div>
+
+        <div class="row">
+          <div class="row-icon"><i class="bi bi-calendar3"></i></div>
+          <input type="date" class="form-control" name="todoDateEcheance">
+          <div class="col">
+            <span class="input-group-text">A</span>
+            <input type="time" class="form-control" name="todoHeureEcheance">
+          </div>
+        </div>
+
+        <div class="row row-actions">
+          <button type="button" class="btn btn-primary" id="btnAjouterTodo">
+            <i class="bi bi-plus-circle-fill"></i>
+            Ajouter
+          </button>
+          <button type="button" class="btn btn-danger" id="btnAnnulerTodo">
+            <i class="bi bi-x-lg"></i>
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="app-content" id="todosList">
+      <!-- <div class="task">
+        <div class="task-icon">
+          <img src="img/Object.png" alt="task icon">
+        </div>
+        <div class="task-content">
+          <h3 class="task-title" contenteditable>Task Title </h3>
+          <p class="task-infos">04/01/2024 - 14h55</p>
+        </div>
+        <div class="task-actions">
+          <button class="btn-check btn-icon">
+            <i class="bi bi-check-square"></i>
+          </button>
+          <button class="btn-delete btn-icon">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      </div> -->
+    </div>
+
+    
+    <div class="app-content" id="todosTermineesList">
+      
+      <!-- <div class="task">
+        <div class="task-icon">
+          <img src="img/Object.png" alt="task icon">
+        </div>
+        <div class="task-content">
+          <h3 class="task-title" contenteditable>Task Title </h3>
+          <p class="task-infos">04/01/2024 - 14h55</p>
+        </div>
+        <div class="task-actions">
+          <button class="btn-check btn-icon">
+            <i class="bi bi-check-square"></i>
+          </button>
+          <button class="btn-delete btn-icon">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+</body>
+
+</html>
