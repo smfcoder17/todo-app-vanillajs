@@ -22,6 +22,10 @@ class TodoApp {
     #todosList = document.getElementById("todosList");
     #todosTermineesList = document.getElementById("todosTermineesList");
 
+    ANIMATION_DURATION_SHORT = 250;
+    ANIMATION_DURATION = 500;
+    ANIMATION_DURATION_LONG = 750;
+
     constructor() {
         this.#todos = [];
     }
@@ -52,14 +56,33 @@ class TodoApp {
 
     afficheTodoForm(annuler = false) {
         if (annuler) {
-            this.#todoForm.classList.remove("active", "already-active");
+
+            this.#todoForm.classList.add("deactivating");
             this.#todoForm.reset();
+
+            let resetTimeOut =  setTimeout(() => {
+                this.#todoForm.classList.remove("active", "already-active", "deactivating");
+
+                clearTimeout(resetTimeOut);
+            }, this.ANIMATION_DURATION_SHORT);
         } else {
             if (this.#todoForm.classList.contains("active")) {
                 this.#todoForm.classList.add("already-active");
-                
+
+                let alreadyActiveTimeOut =  setTimeout(() => {
+                    this.#todoForm.classList.remove("already-active");
+
+                    clearTimeout(alreadyActiveTimeOut);
+                }, this.ANIMATION_DURATION);
             } else {
                 this.#todoForm.classList.add("active");
+                this.#todoForm.classList.add("activating");
+                
+                let activatingTimeOut = setTimeout(() => {
+                    this.#todoForm.classList.remove("activating");
+
+                    clearTimeout(activatingTimeOut);
+                }, this.ANIMATION_DURATION_SHORT);
             }
         }
     }
@@ -89,6 +112,7 @@ class TodoApp {
     ajouterTodo(todo) {
         todo.id = this.#todoIdIncrement++;
         this.#todos.push(todo);
+        // FIXME: Ajouter un tri par date d'échéance
         this.#todos.sort((a, b) => {
             // Compare les dates d'échéance
             let date_a = new Date(a.dateEcheance + "T" + a.heureEcheance);
@@ -116,21 +140,45 @@ class TodoApp {
     }
 
     terminerTodo(todoId) {
-        let todo = this.#todos.find(todo => todo.id === todoId);
-        todo.estTerminee = true;
-        this.#todosTerminees.push(todo);
-        this.supprimerTodo(todoId);
-        this.dispatchTodosTermineesUpdated();
+        let todoElement = document.querySelector(`.task[data-id="${todoId}"]`);
+        todoElement.classList.add("task-checking");
+        
+        let timeOutID = setTimeout(() => {
+            let todo = this.#todos.find(todo => todo.id === todoId);
+            todo.estTerminee = true;
+            this.#todosTerminees.push(todo);
+            this.#todos = this.#todos.filter(todo => todo.id !== todoId);
+            this.dispatchTodosUpdated();
+            this.dispatchTodosTermineesUpdated();
+
+            clearTimeout(timeOutID);
+        }, this.ANIMATION_DURATION);
     }
 
     supprimerTodo(todoId) {
-        this.#todos = this.#todos.filter(todo => todo.id !== todoId);
-        this.dispatchTodosUpdated();
+        let todoElement = document.querySelector(`.task[data-id="${todoId}"]`);
+        todoElement.classList.add("task-deleting");
+
+        let timeOutID = setTimeout(() => {
+            todoElement.remove();
+            this.#todos = this.#todos.filter(todo => todo.id !== todoId);
+            this.dispatchTodosUpdated();
+
+            clearTimeout(timeOutID);
+        }, this.ANIMATION_DURATION);
     }
 
     supprimerTodoTerminee(todoId) {
-        this.#todosTerminees = this.#todosTerminees.filter(todo => todo.id !== todoId);
-        this.dispatchTodosTermineesUpdated();
+        let todoElement = document.querySelector(`.task[data-id="${todoId}"]`);
+        todoElement.classList.add("task-deleting");
+
+        let timeOutID = setTimeout(() => {
+            todoElement.remove();
+            this.#todosTerminees = this.#todosTerminees.filter(todo => todo.id !== todoId);
+            this.dispatchTodosTermineesUpdated();
+
+            clearTimeout(timeOutID);
+        }, this.ANIMATION_DURATION);
     }
 
     updateTodoTitre(todoId, titre) {
@@ -149,6 +197,7 @@ class TodoApp {
         this.#todos.forEach((todo) => {
             let todoItem = document.createElement("div");
             todoItem.classList.add("task");
+            todoItem.setAttribute("data-id", todo.id);
             todoItem.innerHTML = `
                 <div class="task-icon">
                     <img src="img/Object.png" alt="task icon">
