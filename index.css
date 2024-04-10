@@ -6,6 +6,12 @@
     --gray-color: #F4F4F4;
 }
 
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Montserrat;
     font-style: normal;
@@ -22,6 +28,11 @@ body {
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
+}
+
+.app-container .app-header,
+.app-container .app-content {
+    width: min(95%, 520px);
 }
 
 .app-header {
@@ -85,7 +96,7 @@ body {
     justify-content: center;
     gap: 1em;
 
-    width: 520px;
+    width: 100%;
     height: auto;
     padding: 1em;
     background: #ffffff;
@@ -98,10 +109,21 @@ body {
     display: flex;
 }
 
+.task-creation-component.activating {
+    -webkit-animation: slide-in-top 250ms cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-top 250ms cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.task-creation-component.deactivating {
+    -webkit-animation: slide-in-top 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse forwards;
+    animation: slide-in-top 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse forwards;
+}
+
 .task-creation-component.already-active {
     border: 1px solid var(--danger-color);
-    -webkit-animation: shake-top 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-    animation: shake-top 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    -webkit-animation: shake-top 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
+    animation: shake-top 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
+    animation-composition: replace;
 }
 
 .task-creation-component .row {
@@ -165,9 +187,11 @@ body {
     align-items: center;
     justify-content: flex-start;
     gap: 1em;
-    width: 520px;
     padding-bottom: 1.5em;
     margin-bottom: 1.5em;
+}
+
+#todosList {
     border-bottom: 2px solid rgba(255, 255, 255, 0.25);
 }
 
@@ -181,6 +205,17 @@ body {
     background: #ffffff;
     border-radius: 18px;
     box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25);
+}
+
+.app-content .task.task-checking {
+    -webkit-animation: puff-out-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: puff-out-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+}
+
+.app-content .task.task-deleting {
+    -webkit-animation: slide-out-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-out-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .app-content .task.task-done {
@@ -288,28 +323,28 @@ body {
               transform-origin: 50% 0;
     }
     10% {
-      -webkit-transform: rotate(2deg);
-              transform: rotate(2deg);
+      -webkit-transform: rotate(1deg);
+              transform: rotate(1deg);
     }
     20%,
     40%,
     60% {
-      -webkit-transform: rotate(-4deg);
-              transform: rotate(-4deg);
+      -webkit-transform: rotate(-2deg);
+              transform: rotate(-2deg);
     }
     30%,
     50%,
     70% {
-      -webkit-transform: rotate(4deg);
-              transform: rotate(4deg);
-    }
-    80% {
-      -webkit-transform: rotate(-2deg);
-              transform: rotate(-2deg);
-    }
-    90% {
       -webkit-transform: rotate(2deg);
               transform: rotate(2deg);
+    }
+    80% {
+      -webkit-transform: rotate(-1deg);
+              transform: rotate(-1deg);
+    }
+    90% {
+      -webkit-transform: rotate(1deg);
+              transform: rotate(1deg);
     }
   }
   @keyframes shake-top {
@@ -321,28 +356,28 @@ body {
               transform-origin: 50% 0;
     }
     10% {
-      -webkit-transform: rotate(2deg);
-              transform: rotate(2deg);
+      -webkit-transform: rotate(1deg);
+              transform: rotate(1deg);
     }
     20%,
     40%,
     60% {
-      -webkit-transform: rotate(-4deg);
-              transform: rotate(-4deg);
+      -webkit-transform: rotate(-2deg);
+              transform: rotate(-2deg);
     }
     30%,
     50%,
     70% {
-      -webkit-transform: rotate(4deg);
-              transform: rotate(4deg);
-    }
-    80% {
-      -webkit-transform: rotate(-2deg);
-              transform: rotate(-2deg);
-    }
-    90% {
       -webkit-transform: rotate(2deg);
               transform: rotate(2deg);
+    }
+    80% {
+      -webkit-transform: rotate(-1deg);
+              transform: rotate(-1deg);
+    }
+    90% {
+      -webkit-transform: rotate(1deg);
+              transform: rotate(1deg);
     }
   }
   
@@ -360,8 +395,8 @@ body {
       opacity: 1;
     }
     100% {
-      -webkit-transform: scale(2);
-              transform: scale(2);
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
       -webkit-filter: blur(4px);
               filter: blur(4px);
       opacity: 0;
@@ -376,11 +411,71 @@ body {
       opacity: 1;
     }
     100% {
-      -webkit-transform: scale(2);
-              transform: scale(2);
+      -webkit-transform: scale(1.2);
+              transform: scale(1.2);
       -webkit-filter: blur(4px);
               filter: blur(4px);
       opacity: 0;
+    }
+  }
+
+  /**
+ * ----------------------------------------
+ * animation slide-out-left
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-out-left {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateX(-200px);
+              transform: translateX(-200px);
+      opacity: 0;
+    }
+  }
+  @keyframes slide-out-left {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateX(-200px);
+              transform: translateX(-200px);
+      opacity: 0;
+    }
+  }
+
+  /**
+ * ----------------------------------------
+ * animation slide-in-top
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-50px);
+              transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-50px);
+              transform: translateY(-50px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+      opacity: 1;
     }
   }
   
